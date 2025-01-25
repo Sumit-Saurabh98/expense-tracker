@@ -8,6 +8,7 @@ import {expressMiddleware} from '@apollo/server/express4';
 import {ApolloServerPluginDrainHttpServer} from '@apollo/server/plugin/drainHttpServer';
 import mergedResolvers from "./resolvers/index.js";
 import mergedTypeDefs from "./typeDefs/index.js";
+import { connectDB } from "./db/connectDB.js";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -40,5 +41,7 @@ app.use(
 
 // Modified server startup
 await new Promise((resolve) => httpServer.listen({ port: process.env.PORT || 4444 }, resolve));
+
+await connectDB();
 
 console.log(`🚀 Server ready at http://localhost:4444/graphql`);
